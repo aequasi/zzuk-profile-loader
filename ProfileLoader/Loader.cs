@@ -13,12 +13,19 @@ namespace ProfileLoader
         XML
     }
 
+    public enum ProfileType
+    {
+        Grinding,
+        Questing,
+        Gathering
+    }
+
     public class Loader
     {
-        public static async Task<ProfileData> LoadProfileAsync(string fileName, string profileName, ProfileExtension profileExtension, string profileType)
+        public static async Task<ProfileData> LoadProfileAsync(string fileName, string profileName, ProfileExtension profileExtension, ProfileType profileType)
             => await Task.Run(() => LoadProfile(fileName, profileName, profileExtension, profileType));
 
-        public static ProfileData LoadProfile(string fileName, string profileName, ProfileExtension profileExtension, string profileType)
+        public static ProfileData LoadProfile(string fileName, string profileName, ProfileExtension profileExtension, ProfileType profileType)
         {
             string content = new StreamReader(fileName).ReadToEnd();
             if (profileExtension == ProfileExtension.XML) {
@@ -28,7 +35,7 @@ namespace ProfileLoader
             return JsonConvert.DeserializeObject<ProfileData>(content);
         }
 
-        private static string ConvertXmlToJson(string profileName, string content, string profileType)
+        private static string ConvertXmlToJson(string profileName, string content, ProfileType profileType)
         {
             string url = "http://profile-converter.herokuapp.com/xml/" + WebUtility.UrlEncode(profileName) + "/" + profileType;
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
