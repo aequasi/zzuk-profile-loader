@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProfileLoader
 {
-    public enum ProfileType
+    public enum ProfileExtension
     {
         JSON,
         XML
@@ -15,22 +15,23 @@ namespace ProfileLoader
 
     public class Loader
     {
-        public static async Task<ProfileData> LoadProfileAsync(string fileName, string profileName, ProfileType type)
-            => await Task.Run(() => LoadProfile(fileName, profileName, type));
+        public static async Task<ProfileData> LoadProfileAsync(string fileName, string profileName, ProfileExtension profileExtension, string profileType)
+            => await Task.Run(() => LoadProfile(fileName, profileName, profileExtension, profileType));
 
-        public static ProfileData LoadProfile(string fileName, string profileName, ProfileType type)
+        public static ProfileData LoadProfile(string fileName, string profileName, ProfileExtension profileExtension, string profileType)
         {
             string content = new StreamReader(fileName).ReadToEnd();
-            if (type == ProfileType.JSON) {
-                content = ConvertXmlToJson(profileName, content);
+            if (profileExtension == ProfileExtension.XML) {
+                content = ConvertXmlToJson(profileName, content, profileType);
             }
 
             return JsonConvert.DeserializeObject<ProfileData>(content);
         }
 
-        private static string ConvertXmlToJson(string profileName, string content)
+        private static string ConvertXmlToJson(string profileName, string content, string profileType)
         {
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create($"http://profile-converter.herokuapp.com/xml/{profileName}");
+            string url = "http://profile-converter.herokuapp.com/xml/" + WebUtility.UrlEncode(profileName) + "/" + profileType;
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
 
             byte[] bytes = Encoding.ASCII.GetBytes(content);
             request.ContentType = "text/xml; encoding='utf-8'";
@@ -43,7 +44,9 @@ namespace ProfileLoader
 
             HttpWebResponse response = (HttpWebResponse) request.GetResponse();
             if (response.StatusCode == HttpStatusCode.OK) {
-                return new StreamReader(response.GetResponseStream()).ReadToEnd();
+                string json = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                return json;
             }
 
             throw new Exception("Could not convert XML to JSON: " + response.ToString());
