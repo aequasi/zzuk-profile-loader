@@ -17,7 +17,8 @@ namespace ProfileLoader
     {
         Grinding,
         Questing,
-        Gathering
+        Gathering,
+        Travel
     }
 
     public class Loader
