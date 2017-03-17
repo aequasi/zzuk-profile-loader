@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfileLoader
+namespace Aequasi.ProfileLoader
 {
     public enum ProfileExtension
     {
@@ -23,22 +23,22 @@ namespace ProfileLoader
 
     public class Loader
     {
-        public static async Task<ProfileData> LoadProfileAsync(string fileName, string profileName, ProfileExtension profileExtension, ProfileType profileType)
-            => await Task.Run(() => LoadProfile(fileName, profileName, profileExtension, profileType));
+        public static async Task<ProfileData> LoadProfileAsync(LoaderOptions options)
+            => await Task.Run(() => LoadProfile(options));
 
-        public static ProfileData LoadProfile(string fileName, string profileName, ProfileExtension profileExtension, ProfileType profileType)
+        public static ProfileData LoadProfile(LoaderOptions options)
         {
-            string content = new StreamReader(fileName).ReadToEnd();
-            if (profileExtension == ProfileExtension.XML) {
-                content = ConvertXmlToJson(profileName, content, profileType);
+            string content = new StreamReader(options.FileName).ReadToEnd();
+            if (options.ProfileExtension == ProfileExtension.XML) {
+                content = ConvertXmlToJson(options, content);
             }
 
             return JsonConvert.DeserializeObject<ProfileData>(content);
         }
 
-        private static string ConvertXmlToJson(string profileName, string content, ProfileType profileType)
+        private static string ConvertXmlToJson(LoaderOptions options, string content)
         {
-            string url = "http://profile-converter.herokuapp.com/xml/" + WebUtility.UrlEncode(profileName) + "/" + profileType;
+            string url = "http://profile-converter.herokuapp.com/xml/" + WebUtility.UrlEncode(options.ProfileName) + "/" +options.ProfileType;
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
 
             byte[] bytes = Encoding.ASCII.GetBytes(content);

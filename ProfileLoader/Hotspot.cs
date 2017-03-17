@@ -1,8 +1,7 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using ZzukBot.Objects;
 
-namespace ProfileLoader
+namespace Aequasi.ProfileLoader
 {
     public class Hotspot
     {

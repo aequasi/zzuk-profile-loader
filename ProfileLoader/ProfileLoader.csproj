@@ -7,8 +7,8 @@
     <ProjectGuid>{64616C4C-0CD8-4C16-8F0B-0F77A7E58444}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProfileLoader</RootNamespace>
-    <AssemblyName>ProfileLoader</AssemblyName>
+    <RootNamespace>Aequasi.ProfileLoader</RootNamespace>
+    <AssemblyName>Aequasi.ProfileLoader</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,9 +52,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Hotspot.cs" />
+    <Compile Include="LoaderOptions.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="ProfileData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿namespace ProfileLoader
+﻿namespace Aequasi.ProfileLoader
 {
     public class ProfileData
     {
