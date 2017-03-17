@@ -9,8 +9,8 @@ namespace Aequasi.ProfileLoader
 {
     public enum ProfileExtension
     {
-        JSON,
-        XML
+        Json,
+        Xml
     }
 
     public enum ProfileType
@@ -21,22 +21,41 @@ namespace Aequasi.ProfileLoader
         Travel
     }
 
+    /// <summary>
+    /// Loader handles all the profile loading
+    /// </summary>
     public class Loader
     {
-        public static async Task<ProfileData> LoadProfileAsync(LoaderOptions options)
+        /// <summary>
+        /// LoadProfileAsync loads a profile asyncronously, based on the given options
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public async Task<ProfileData> LoadProfileAsync(LoaderOptions options)
             => await Task.Run(() => LoadProfile(options));
 
-        public static ProfileData LoadProfile(LoaderOptions options)
+        /// <summary>
+        /// LoadProfile loads a profile based on the given options
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public ProfileData LoadProfile(LoaderOptions options)
         {
             string content = new StreamReader(options.FileName).ReadToEnd();
-            if (options.ProfileExtension == ProfileExtension.XML) {
+            if (options.ProfileExtension == ProfileExtension.Xml) {
                 content = ConvertXmlToJson(options, content);
             }
 
             return JsonConvert.DeserializeObject<ProfileData>(content);
         }
 
-        private static string ConvertXmlToJson(LoaderOptions options, string content)
+        /// <summary>
+        /// ConvertXmlToJson converts the supplied content from XML to JSON
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private string ConvertXmlToJson(LoaderOptions options, string content)
         {
             string url = "http://profile-converter.herokuapp.com/xml/" + WebUtility.UrlEncode(options.ProfileName) + "/" +options.ProfileType;
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);

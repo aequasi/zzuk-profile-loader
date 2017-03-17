@@ -9,16 +9,17 @@ namespace ProfileLoaderTests
     public class LoaderTest
     {
         [TestMethod]
-        public void TestLoadProfileXML()
+        public void TestLoadProfileXml()
         {
-            string profileName = "Elwynn_1-5";
+            Loader loader = new Loader();
+            const string profileName = "Elwynn_1-5";
             string fileName = Path.GetFullPath("./") + profileName + ".xml";
 
-            ProfileData profileData = Loader.LoadProfile(
+            ProfileData profileData = loader.LoadProfile(
                 new LoaderOptions{
                     FileName = fileName,
                     ProfileName = profileName,
-                    ProfileExtension = ProfileExtension.XML,
+                    ProfileExtension = ProfileExtension.Xml,
                     ProfileType = ProfileType.Grinding
                 }
             );
@@ -34,12 +35,13 @@ namespace ProfileLoaderTests
         }
 
         [TestMethod]
-        public void TestLoadProfileJSON()
+        public void TestLoadProfileJson()
         {
-            string profileName = "Elwynn_1-5";
+            Loader loader = new Loader();
+            const string profileName = "Elwynn_1-5";
             string fileName = Path.GetFullPath("./") + profileName + ".json";
 
-            ProfileData profileData = Loader.LoadProfile(
+            ProfileData profileData = loader.LoadProfile(
                 new LoaderOptions {
                     FileName = fileName,
                     ProfileName = profileName,
@@ -59,17 +61,18 @@ namespace ProfileLoaderTests
         [TestMethod]
         public void TestProfileTypes()
         {
-            string profileName = "Elwynn_1-5";
+            Loader loader = new Loader();
+            const string profileName = "Elwynn_1-5";
             string fileName = Path.GetFullPath("./") + profileName + ".xml";
             ProfileType[] types = { ProfileType.Gathering, ProfileType.Grinding, ProfileType.Questing, ProfileType.Travel };
             
             foreach (ProfileType type in types) {
-                ProfileData profileData = Loader.LoadProfile(
+                ProfileData profileData = loader.LoadProfile(
                     new LoaderOptions {
                         FileName = fileName,
                         ProfileName = profileName,
                         ProfileType = type,
-                        ProfileExtension = ProfileExtension.XML
+                        ProfileExtension = ProfileExtension.Xml
                     }
                 );
 
