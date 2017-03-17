@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aequasi.ProfileLoader</RootNamespace>
-    <AssemblyName>Aequasi.ProfileLoader</AssemblyName>
+    <AssemblyName>ProfileLoader</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
